@@ -10,7 +10,7 @@ no accounts, no servers, no launcher.
 
 ---
 
-## 🤖 This mod was written by AI — please read this
+## This mod was written by AI — please read this
 
 Being upfront about it, because you deserve to know what you're installing:
 
@@ -31,6 +31,7 @@ What that means in practice:
 * **It's public domain** ([Unlicense](UNLICENSE)) — fork it, rewrite it, ship your own version, no credit
   needed. If AI-written code isn't for you, that's completely fair; this is the honest label rather than a sales pitch.
 
+* **Repo owner here**, I really hope this is clear to the people who want to know this i personally wanted a multiplayer mod to enjoy with friends and its a lot of fun. I don't want this to be the normal multiplayer experience for this game and I'm sure something much better will come. I also hope this helps to show how far AI has come, and to a degree it's worrying and it was released without a license since i don't believe anyone should claim ownership over generated code. Lastly Ive heard there is a multiplayer mod being worked on so i feel i should say this is not affiliated with it.
 ---
 
 ## What it does
