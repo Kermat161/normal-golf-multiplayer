@@ -22,9 +22,3 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
-
----
-
-This dedication covers the source code in this repository only.
-The release zip also ships unmodified third-party components which keep their own licences:
-BepInEx (LGPL-2.1) and LiteNetLib (MIT). See THIRD-PARTY-NOTICES.txt.
