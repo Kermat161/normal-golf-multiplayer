@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>NormalGolfMultiplayer</AssemblyName>
+    <RootNamespace>NormalGolfMultiplayer</RootNamespace>
+    <Version>0.2.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <DebugType>embedded</DebugType>
+    <!-- Unity's Mono can't read portable PDB line info through BepInEx reliably; embedded keeps stack traces useful. -->
+
+    <!-- build.ps1 finds the game and passes GameDir; these fallbacks let an IDE build the project too.
+         GameDir may arrive as a global property (-p:), which cannot be rewritten here, so the
+         slash-normalised copy lives in GameRoot. -->
+    <GameDir Condition="'$(GameDir)' == '' And '$(NGMP_GAME_DIR)' != ''">$(NGMP_GAME_DIR)</GameDir>
+    <GameDir Condition="'$(GameDir)' == ''">$(MSBuildThisFileDirectory)..\Normal</GameDir>
+    <GameRoot>$(GameDir)</GameRoot>
+    <GameRoot Condition="!HasTrailingSlash('$(GameRoot)')">$(GameRoot)\</GameRoot>
+    <ManagedDir>$(GameRoot)Normal Golf Game_Data\Managed\</ManagedDir>
+    <BepInExDir>$(GameRoot)BepInEx\</BepInExDir>
+    <PluginOutDir>$(BepInExDir)plugins\NormalGolfMultiplayer\</PluginOutDir>
+  </PropertyGroup>
+
+  <Target Name="CheckGameDir" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('$(ManagedDir)Assembly-CSharp.dll')"
+           Text="Normal Golf Game not found at '$(GameDir)'. Use build.ps1, or set NGMP_GAME_DIR to the folder containing Normal Golf Game.exe." />
+    <Error Condition="!Exists('$(BepInExDir)core\BepInEx.dll')"
+           Text="BepInEx 5 is not installed in '$(GameDir)'. Install it there first: https://github.com/BepInEx/BepInEx/releases" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="LiteNetLib" Version="2.1.4" />
+  </ItemGroup>
+
+  <!-- Game + engine assemblies. Private=false: they already exist in the game, never copy them. -->
+  <ItemGroup>
+    <Reference Include="$(BepInExDir)core\BepInEx.dll" Private="false" />
+    <Reference Include="$(BepInExDir)core\0Harmony.dll" Private="false" />
+    <Reference Include="$(ManagedDir)Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(ManagedDir)ECM2.dll" Private="false" />
+    <Reference Include="$(ManagedDir)DOTween.dll" Private="false" />
+    <Reference Include="$(ManagedDir)com.rlabrecque.steamworks.net.dll" Private="false" />
+    <Reference Include="$(ManagedDir)UnityEngine.dll" Private="false" />
+    <Reference Include="$(ManagedDir)UnityEngine.*.dll" Private="false" />
+    <Reference Include="$(ManagedDir)Unity.InputSystem.dll" Private="false" />
+    <Reference Include="$(ManagedDir)Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="$(ManagedDir)Unity.RenderPipelines.Core.Runtime.dll" Private="false" />
+    <Reference Include="$(ManagedDir)Unity.RenderPipelines.Universal.Runtime.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="DeployPlugin" AfterTargets="Build">
+    <MakeDir Directories="$(PluginOutDir)" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll;$(TargetDir)LiteNetLib.dll" DestinationFolder="$(PluginOutDir)" SkipUnchangedFiles="false" />
+    <Message Importance="high" Text="Deployed to $(PluginOutDir)" />
+  </Target>
+
+</Project>

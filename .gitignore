@@ -1,0 +1,14 @@
+# Build output
+bin/
+obj/
+dist/
+
+# Local machine settings
+game-path.txt
+*.user
+.vs/
+.idea/
+
+# Test artefacts
+*.log
+screenshots/tmp/
